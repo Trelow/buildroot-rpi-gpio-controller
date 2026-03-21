@@ -1,0 +1,23 @@
+# generated artifacts
+*.img
+vmlinuz*
+*.tar
+*.tar.gz
+*.tar.xz
+*.zip
+
+# submission-only files
+checksum.txt
+url.txt
+README.txt
+
+# build outputs
+build/
+output/
+buildroot-*/
+linux-*/
+
+# temp/editor
+*.swp
+*.tmp
+.DS_Store

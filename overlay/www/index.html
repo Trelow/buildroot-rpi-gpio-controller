@@ -1,0 +1,230 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tema 2 SI</title>
+  <style>
+    :root{
+      --bg1:#060f0c;
+      --bg2:#072019;
+      --text:#eaf6ef;
+      --muted: rgba(234,246,239,.75);
+      --green:#36d07f;
+      --red:#ff5a46;
+      --blue:#3b6cff;
+      --gold:#ffd54a;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1000px 600px at 50% 25%, #0f3a2c 0%, var(--bg2) 40%, var(--bg1) 100%);
+      color:var(--text);
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:45px 20px;
+    }
+
+    .wrap{
+      text-align:center;
+      width:min(750px, 100%);
+    }
+
+    .sub{
+      margin:0 0 26px;
+      color:var(--muted);
+      font-size: clamp(14px, 2vw, 18px);
+    }
+
+    h1{
+      margin:0 0 10px;
+      font-weight:710;
+      letter-spacing:.3px;
+      font-size: clamp(38px, 4vw, 58px);
+    }
+
+    .menu{
+      margin: 0 auto 15px;
+      width: min(530px, 90vw);
+      aspect-ratio: 1 / 1.055; 
+      position: relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .tree{
+      position: relative;
+      transform: translateY(-20px);
+      width: 80%;
+      height: 80%;
+    }
+
+    .trunk{
+      position:absolute;
+      background: linear-gradient(180deg, #7a4a24 0%, #5b3519 100%);
+      border-radius: 4px;
+      filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.356));
+      width: 15%;
+      height: 16%;
+      left: 42.5%;
+      top: 93%;
+    }
+
+    .crown{
+      position:absolute;
+      inset:0;
+      background: linear-gradient(180deg, #2fdd80 0%, #17743c 55%, #0e5a2a 100%);
+      clip-path: polygon(50% 2%, 4% 100%, 95% 100%);
+      border-radius: 17px;
+      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.445));
+    }
+
+    .led{
+      position:absolute;
+      width: 24px;
+      height: 24px;
+      border-radius: 500px;
+      transform: translate(-50%, -50%) scale(0.93);
+      filter: saturate(0.71) brightness(0.55);
+      opacity: .3;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+
+      transition:
+        opacity 0.8s ease,
+        transform 0.8s ease,
+        filter 0.8s ease,
+        box-shadow 0.8s ease;
+    }
+
+    .led.on{
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.07);
+      box-shadow:
+        0 0 10px rgba(255, 255, 255, 0.199),
+        0 0 22px currentColor,
+        0 0 46px currentColor;
+      filter: saturate(1.27) brightness(1.16);
+    }
+
+    .buttons{
+      display:flex;
+      gap:15px;
+      margin-top: 30px;
+      justify-content:center;
+      flex-wrap: wrap;
+    }
+
+    button{
+      border:0;
+      cursor:pointer;
+      padding: 15px 22px;
+      border-radius: 15px;
+      font-size: 16px;
+      font-weight: 800;
+      color:#0b1a12;
+      transition: transform .08s ease;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.418);
+    }
+    button:active{ transform: translateY(2px); }
+    .start{ background: var(--green); }
+    .stop{  background: var(--red); }
+    .random{ background: var(--blue); }
+    .allon{ background: var(--gold); }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <h1>Tema 2 SI</h1>
+    <div class="sub">Internet of X-Mas Trees</div>
+
+    <div class="menu">
+      <div class="tree" id="tree">
+        <div class="trunk"></div>
+        <div class="crown"></div>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button class="start" onclick="button_press('start')">Start</button>
+      <button class="stop" onclick="button_press('stop')">Stop</button>
+      <button class="random" onclick="button_press('random')">Random</button>
+      <button class="allon" onclick="button_press('all')">All ON</button>
+      <button class="stop" onclick="button_press('off')">All OFF</button>
+    </div>
+  </div>
+
+<script>
+  const N = 20;
+  const chx_tree = document.getElementById('tree');
+
+  const leds_colors = [
+    "#9cff57", "#3b6cff", "#ffd54a", "#4cf2ff", "#5cff74",
+    "#3b6cff", "#ff3d3d", "#ffd54a", "#ff59ff", "#65ff5a",
+    "#3b6cff", "#ff59ff", "#ff59ff", "#ff3d3d", "#65ff5a",
+    "#ffd54a", "#4cf2ff", "#2b2b2b", "#6b3b2a", "#3b6cff"
+  ];
+
+  const leds_col = [
+    [50,  9],
+    [44, 24], [56, 24],
+    [36, 38], [50, 40], [64, 38],
+    [26, 56], [43, 58], [57, 58], [72, 56],
+    [18, 74], [34, 76], [50, 77], [66, 76], [82, 74],
+    [14, 90], [30, 92], [50, 94], [70, 92], [86, 90],
+  ];
+
+  const leds = [];
+  for (let i = 0; i < N; i++) {
+    const b = document.createElement('div');
+    b.className = 'led';
+    b.style.background = leds_colors[i];
+    b.style.color = leds_colors[i];
+    b.style.left = leds_col[i][0] + '%';
+    b.style.top  = leds_col[i][1] + '%';
+    b.title = 'GPIO ' + i;
+    b.style.cursor = 'pointer';
+
+    b.addEventListener('click', () => toggleLed(i));
+    chx_tree.appendChild(b);
+    leds.push(b);
+  }
+
+  setInterval(refresh, 250);
+  refresh();
+
+  async function refresh(){
+    try{
+      const r = await fetch('/cgi-bin/api.sh?action=state', { cache:'no-store' });
+      const j = await r.json();
+
+      const onSet = new Set((j.leds_on || []).map(Number));
+      for (let i=0;i<N;i++){
+        leds[i].classList.toggle('on', onSet.has(i));
+      }
+    }catch(e){
+      console.error('ERROR: ' + e.message);
+    }
+  }
+
+  async function button_press(a){
+    try{
+      await fetch('/cgi-bin/api.sh?action=' + encodeURIComponent(a), { cache:'no-store' });
+    }catch(e){}
+    await refresh();
+  }
+
+  async function toggleLed(i){
+    try{
+      await fetch('/cgi-bin/api.sh?action=toggle&idx=' + encodeURIComponent(i), { cache:'no-store' });
+    }catch(e){}
+    await refresh();
+  }
+</script>
+</body>
+</html>

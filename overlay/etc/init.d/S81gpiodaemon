@@ -1,0 +1,17 @@
+#!/bin/sh
+case "$1" in
+  start)
+    /srv/daemon-gpio.sh &
+    ;;
+  stop)
+    killall daemon-gpio.sh 2>/dev/null
+    ;;
+  restart)
+    "$0" stop
+    "$0" start
+    ;;
+  *)
+    exit 1
+    ;;
+esac
+exit 0
