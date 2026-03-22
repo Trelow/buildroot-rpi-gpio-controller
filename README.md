@@ -125,6 +125,10 @@ Default credentials:
 - user: `root`
 - password: `tema2025`
 
+## Prebuilt Runtime Artifacts
+
+To run the project directly in QEMU, you also need the prebuilt runtime files `tema2.img` and `vmlinuz-tema2`. These large generated artifacts are not stored in the repository itself and are provided through the repository **Releases** section instead. Download `tema2.img`, `vmlinuz-tema2`, and, if needed, `bcm2837-rpi-3-b.dtb` from **Releases**, place them in the root of the project next to `launch-tema2.sh`, and then run the project using the commands shown below.
+
 ## Build and Run
 
 The provided `Makefile` includes helper targets for running QEMU, starting the GPIO viewer, and generating the submission archives.
@@ -338,3 +342,7 @@ To validate GPIO functionality:
 - The HTTP backend is implemented through CGI, keeping the solution lightweight.
 - GPIO control is handled through libgpiod tools, mainly `gpioset`.
 - The design focuses on simplicity, reproducibility, and a small runtime footprint.
+
+## Web Interface Preview
+
+![Web Interface Screenshot](assets/project-preview.png)
