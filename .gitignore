@@ -1,12 +1,9 @@
-# generated artifacts
 *.img
 vmlinuz*
 *.tar
 *.tar.gz
 *.tar.xz
 *.zip
-
-# submission-only files
 checksum.txt
 url.txt
 README.txt

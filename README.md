@@ -1,4 +1,4 @@
-# RPI/GPIO Internet of Trees
+# Buildroot GPIO Web Controller
 
 Minimal embedded Linux IoT project for an emulated **Raspberry Pi 3 Model B**, built with **Buildroot** and a custom **ARM64 Linux kernel**.
 
