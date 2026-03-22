@@ -345,4 +345,4 @@ To validate GPIO functionality:
 
 ## Web Interface Preview
 
-![Web Interface Screenshot](assets/project-preview.png)
+![Web Interface Screenshot](./assets/project-preview.png)
